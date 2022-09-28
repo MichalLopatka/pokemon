@@ -18,7 +18,6 @@ def query_pokemon(session, pokemon_type):
     response = session.get(api)
     damage = response.json()["damage_relations"]
     damage_to = {k: v for k, v in damage.items() if k.endswith('to')}
-    print(damage_to)
     return damage_to
 
 def conduct_queries(attacks):
@@ -26,10 +25,34 @@ def conduct_queries(attacks):
         for attack in attacks:
             damage_relations = query_pokemon(session, attack["from"])
             points = map_points(attack, damage_relations)
-            print(points)
+            print(f"{points}x")
+
+
+def get_input():
+    lines = []
+    while True:
+        line = input()
+        if line:
+            lines.append(line)
+        else:
+            break
+    print(lines)
+    return lines
+
+def process_input(lines):
+    processed_lines = []
+    for line in lines:
+        attacker, receivers = line.split('->')
+        receivers = receivers.split()
+        processed_lines.append({"from": attacker.strip(), "to": receivers})
+    print(processed_lines)
+    return processed_lines
 
 def main():
-    conduct_queries(attacks=[{"from": "fire","to": ["grass"]}, {"from":"normal", "to": ["steel", "poison"]}, {"from": "water", "to": ["poison"]}])
+    # conduct_queries(attacks=[{"from": "fire","to": ["grass"]}, {"from":"fighting", "to": ["rock", "ice"]}, {"from": "psychic", "to": ["poison", "dark"]}])
+    lines = get_input()
+    attacks = process_input(lines)
+    conduct_queries(attacks)
 
 
 if __name__ == "__main__":
