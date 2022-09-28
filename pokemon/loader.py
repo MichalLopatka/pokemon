@@ -2,19 +2,15 @@ from pokemon.attack import Attack
 
 
 class Loader:
-    def __init__(self):
-        self.lines = self.get_input()
+    def __init__(self, filename: str):
+        self.lines = self.get_input(filename=filename)
         self.attacks = self.process_input()
 
-    def get_input(self):
-        lines = []
-        while True:
-            line = input()
-            if line:
-                lines.append(line)
-            else:
-                break
-        return lines
+
+    def get_input(self, filename:str):
+        with open(filename) as f:
+            return f.readlines()
+
 
     def process_input(self):
         processed_lines = []
