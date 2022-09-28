@@ -1,15 +1,18 @@
 import requests
 
+def query_pokemon(session, pokemon_type):
+    api = f"https://pokeapi.co/api/v2/type/{pokemon_type}"
+    response = session.get(api)
+    damage = response.json()
+    print(damage)
 
-def pokemon_api(pokemon_type):
-    with requests.Session() as s:
-        api = f"https://pokeapi.co/api/v2/type/{pokemon_type}"
-        response = s.get(api)
-        damage = response.json()
-        print(damage)
+def conduct_queries(attacks):
+    with requests.Session() as session:
+        for attack in attacks:
+            query_pokemon(session, attack)
 
 def main():
-    pokemon_api("fire")
+    conduct_queries(attacks=["fire", "normal", "water"])
 
 
 if __name__ == "__main__":
