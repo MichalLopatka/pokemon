@@ -1,6 +1,3 @@
-from typing import Dict, List
-import requests
-from pydantic import BaseModel
 from pokemon.loader import Loader
 from pokemon.damage import Damage
 
